@@ -1,0 +1,113 @@
+<h2>Inscription à un évènement</h2>
+
+<form #formulaire="ngForm" (ngSubmit)="inscrire(formulaire)">
+
+  <!-- NOM COMPLET -->
+  <div>
+    <label for="nomComplet">Nom complet :</label>
+
+    <input
+      type="text"
+      id="nomComplet"
+      name="nomComplet"
+      [(ngModel)]="nomComplet"
+      required
+      #nomChamp="ngModel"
+    >
+
+    @if (nomChamp.invalid && nomChamp.touched) {
+      <p>Le nom complet est obligatoire.</p>
+    }
+  </div>
+
+
+  <!-- EMAIL -->
+  <div>
+    <label for="email">Email :</label>
+
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="email"
+      required
+      email
+      #emailChamp="ngModel"
+    >
+
+    @if (emailChamp.invalid && emailChamp.touched) {
+
+      @if (emailChamp.errors?.['required']) {
+        <p>L'email est obligatoire.</p>
+      }
+
+      @if (emailChamp.errors?.['email']) {
+        <p>L'email n'est pas valide.</p>
+      }
+
+    }
+  </div>
+
+
+  <!-- NOMBRE DE PLACES -->
+  <div>
+    <label for="places">Nombre de places :</label>
+
+    <input
+      type="number"
+      id="places"
+      name="places"
+      [(ngModel)]="places"
+      required
+      min="1"
+      max="5"
+      #placesChamp="ngModel"
+    >
+
+    @if (placesChamp.invalid && placesChamp.touched) {
+
+      @if (placesChamp.errors?.['required']) {
+        <p>Le nombre de places est obligatoire.</p>
+      }
+
+      @if (placesChamp.errors?.['min']) {
+        <p>Le nombre minimum de places est 1.</p>
+      }
+
+      @if (placesChamp.errors?.['max']) {
+        <p>Le nombre maximum de places est 5.</p>
+      }
+
+    }
+  </div>
+
+
+  <!-- CONDITIONS -->
+  <div>
+    <label>
+      <input
+        type="checkbox"
+        name="conditions"
+        [(ngModel)]="conditions"
+        required
+        #conditionsChamp="ngModel"
+      >
+
+      J'accepte les conditions
+    </label>
+
+    @if (conditionsChamp.invalid && conditionsChamp.touched) {
+      <p>Vous devez accepter les conditions.</p>
+    }
+  </div>
+
+
+  <!-- BOUTON -->
+  <button
+    type="submit"
+    [disabled]="formulaire.invalid"
+  >
+    S'inscrire
+  </button>
+
+</form>

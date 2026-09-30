@@ -1,0 +1,115 @@
+<h2>Profil utilisateur</h2>
+
+<form #formulaire="ngForm" (ngSubmit)="enregistrer(formulaire)">
+
+  <!-- GROUPE INFORMATIONS PERSONNELLES -->
+
+  <div ngModelGroup="informationsPersonnelles" #infos="ngModelGroup">
+
+    <h3>Informations personnelles</h3>
+
+    <div>
+      <label for="nom">Nom :</label>
+
+      <input
+        type="text"
+        id="nom"
+        name="nom"
+        [(ngModel)]="nom"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="prenom">Prénom :</label>
+
+      <input
+        type="text"
+        id="prenom"
+        name="prenom"
+        [(ngModel)]="prenom"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="dateNaissance">Date de naissance :</label>
+
+      <input
+        type="date"
+        id="dateNaissance"
+        name="dateNaissance"
+        [(ngModel)]="dateNaissance"
+        required
+      >
+    </div>
+
+    @if (infos.valid) {
+      <p>La section Informations personnelles est valide.</p>
+    } @else {
+      <p>La section Informations personnelles est invalide.</p>
+    }
+
+  </div>
+
+
+  <!-- GROUPE ADRESSE -->
+
+  <div ngModelGroup="adresse" #adresse="ngModelGroup">
+
+    <h3>Adresse</h3>
+
+    <div>
+      <label for="rue">Rue :</label>
+
+      <input
+        type="text"
+        id="rue"
+        name="rue"
+        [(ngModel)]="rue"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="ville">Ville :</label>
+
+      <input
+        type="text"
+        id="ville"
+        name="ville"
+        [(ngModel)]="ville"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="codePostal">Code postal :</label>
+
+      <input
+        type="text"
+        id="codePostal"
+        name="codePostal"
+        [(ngModel)]="codePostal"
+        required
+        pattern="[0-9]{5}"
+      >
+    </div>
+
+    @if (adresse.valid) {
+      <p>La section Adresse est valide.</p>
+    } @else {
+      <p>La section Adresse est invalide.</p>
+    }
+
+  </div>
+
+
+  <button
+    type="submit"
+    [disabled]="formulaire.invalid"
+  >
+    Enregistrer
+  </button>
+
+</form>

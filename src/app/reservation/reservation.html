@@ -1,0 +1,202 @@
+<h2>Réservation</h2>
+
+<form #formulaire="ngForm" (ngSubmit)="reserver(formulaire)">
+
+  <!-- ==================== CLIENT ==================== -->
+
+  <div
+    ngModelGroup="client"
+    #client="ngModelGroup"
+  >
+
+    <h3>Client</h3>
+
+    <div>
+      <label for="nom">Nom :</label>
+
+      <input
+        type="text"
+        id="nom"
+        name="nom"
+        [(ngModel)]="nom"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="email">Email :</label>
+
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        email
+      >
+    </div>
+
+    @if (client.valid) {
+      <p>Section Client valide.</p>
+    } @else {
+      <p>Section Client invalide.</p>
+    }
+
+  </div>
+
+
+  <!-- ==================== SÉJOUR ==================== -->
+
+  <div
+    ngModelGroup="sejour"
+    #sejour="ngModelGroup"
+  >
+
+    <h3>Séjour</h3>
+
+    <div>
+      <label for="dateArrivee">Date d'arrivée :</label>
+
+      <input
+        type="date"
+        id="dateArrivee"
+        name="dateArrivee"
+        [(ngModel)]="dateArrivee"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="dateDepart">Date de départ :</label>
+
+      <input
+        type="date"
+        id="dateDepart"
+        name="dateDepart"
+        [(ngModel)]="dateDepart"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="personnes">Nombre de personnes :</label>
+
+      <input
+        type="number"
+        id="personnes"
+        name="personnes"
+        [(ngModel)]="personnes"
+        required
+        min="1"
+        max="10"
+      >
+    </div>
+
+    @if (
+      dateArrivee &&
+      dateDepart &&
+      dateDepart <= dateArrivee
+    ) {
+      <p>
+        La date de départ doit être postérieure à la date d'arrivée.
+      </p>
+    }
+
+    @if (sejour.valid && dateDepart > dateArrivee) {
+      <p>Section Séjour valide.</p>
+    } @else {
+      <p>Section Séjour invalide.</p>
+    }
+
+  </div>
+
+
+  <!-- ==================== FACTURATION ==================== -->
+
+  <div>
+
+    <label>
+      <input
+        type="checkbox"
+        name="adresseFacturationDifferente"
+        [(ngModel)]="adresseFacturationDifferente"
+      >
+
+      Adresse de facturation différente
+    </label>
+
+  </div>
+
+
+  @if (adresseFacturationDifferente) {
+
+    <div
+      ngModelGroup="facturation"
+      #facturation="ngModelGroup"
+    >
+
+      <h3>Facturation</h3>
+
+      <div>
+        <label for="rue">Rue :</label>
+
+        <input
+          type="text"
+          id="rue"
+          name="rue"
+          [(ngModel)]="rue"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="ville">Ville :</label>
+
+        <input
+          type="text"
+          id="ville"
+          name="ville"
+          [(ngModel)]="ville"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="codePostal">Code postal :</label>
+
+        <input
+          type="text"
+          id="codePostal"
+          name="codePostal"
+          [(ngModel)]="codePostal"
+          required
+          pattern="[0-9]{5}"
+        >
+      </div>
+
+      @if (facturation.valid) {
+        <p>Section Facturation valide.</p>
+      } @else {
+        <p>Section Facturation invalide.</p>
+      }
+
+    </div>
+
+  }
+
+
+  <!-- ==================== BOUTON ==================== -->
+
+  <button
+    type="submit"
+    [disabled]="
+      formulaire.invalid ||
+      !dateArrivee ||
+      !dateDepart ||
+      dateDepart <= dateArrivee
+    "
+  >
+    Réserver
+  </button>
+
+</form>

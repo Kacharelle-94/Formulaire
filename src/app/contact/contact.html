@@ -1,0 +1,76 @@
+<h2>Formulaire de contact</h2>
+
+<form #formulaire="ngForm" (ngSubmit)="envoyer(formulaire)">
+
+  <div>
+    <label for="nom">Nom :</label>
+
+    <input
+      type="text"
+      id="nom"
+      name="nom"
+      [(ngModel)]="nom"
+      required
+      #nomChamp="ngModel"
+    >
+
+    @if (nomChamp.invalid && nomChamp.touched) {
+      <p>Le nom est obligatoire.</p>
+    }
+  </div>
+
+
+  <div>
+    <label for="email">Email :</label>
+
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="email"
+      required
+      email
+      #emailChamp="ngModel"
+    >
+
+    @if (emailChamp.invalid && emailChamp.touched) {
+      @if (emailChamp.errors?.['required']) {
+        <p>L'email est obligatoire.</p>
+      }
+
+      @if (emailChamp.errors?.['email']) {
+        <p>L'email n'est pas valide.</p>
+      }
+    }
+  </div>
+
+
+  <div>
+    <label for="message">Message :</label>
+
+    <textarea
+      id="message"
+      name="message"
+      [(ngModel)]="message"
+      required
+      minlength="10"
+      #messageChamp="ngModel"
+    ></textarea>
+
+    @if (messageChamp.invalid && messageChamp.touched) {
+      @if (messageChamp.errors?.['required']) {
+        <p>Le message est obligatoire.</p>
+      }
+
+      @if (messageChamp.errors?.['minlength']) {
+        <p>Le message doit contenir au moins 10 caractères.</p>
+      }
+    }
+  </div>
+
+
+  <button type="submit" [disabled]="formulaire.invalid">
+    Envoyer
+  </button>
+
+</form>
